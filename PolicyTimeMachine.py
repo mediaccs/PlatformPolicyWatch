@@ -1202,15 +1202,14 @@ def Reddit():
     for item in id:
         url = 'https://www.{}.com/policies/{}'.format(item[0], item[1])
         res = requests.get(url, headers=headers)
+        language = etree.HTML(res.text).get('lang')
         selector = etree.HTML(res.text)
         if 'user-agreement' in url:
             infos = selector.xpath('//*[@id="content"]//text()')
             del infos[:infos.index('Reddit User Agreement')]
         else:
             infos = selector.xpath('//*[@id="main-content"]//text()')
-            try:
-                del infos[:infos.index('Reddit Privacy Policy')]
-            except: pass
+            del infos[:infos.index('Reddit Privacy Policy')]
         content = ''.join(infos).strip()
         removal = ['\u200b', '**', '|']
         for r in removal:
@@ -2202,6 +2201,7 @@ def Flickr():
         print(content)
         df = pd.DataFrame(data=[[name, date, content, url]], columns=['platform', 'date', 'content', 'url'])
         df.to_csv(path + name + "_" + i + "_" + date + ".csv", index=False)
+        driver.close()
 
 
 def Facebook():
@@ -2310,6 +2310,7 @@ def Instagram():
             df = pd.DataFrame(data=[[name, date, content, url]], columns=['platform','date', 'content', 'url'])
             df.to_csv(path + name + "_" + i[0] + "_" + date + ".csv", index=False)
             driver.close()
+
 
 
 '''this function All_platforms() is for scraping all the platforms at once.
