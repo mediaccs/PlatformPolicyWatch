@@ -53,7 +53,7 @@ process_csv(input_csv_filename, output_csv_filename, document_column, document_s
 
 In this Markdown document, we will explain a Python script that splits document sections from a CSV file using the Pandas library and regular expressions. The script reads an input CSV file, determines the section separator dynamically based on the content of the document, and saves the sections to a new CSV file.
 
-## Python Code
+##  Python Code
 
 ```python
 import pandas as pd
