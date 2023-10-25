@@ -1,80 +1,55 @@
+# Step 1: Import Libraries
 import pandas as pd
 import re
 
-def process_ss_method(df, input_csv_filename, output_csv_filename):
-    document_separator = "----"
-    
-    header = [field for field in df.columns if field != "Policy content"]
-    rows = []
-
-    for index, row in df.iterrows():
-        if "Policy content" in row:
-            document = row["Policy content"]
-            if document:
-                sections = document.split(document_separator)
-                for section in sections:
-                    if section.strip():
-                        row_data = [row[field] for field in header]
-                        row_data.append(section)
-                        rows.append(row_data)
-
-    sections_df = pd.DataFrame(rows, columns=header + ["Section"])
-    sections_df.to_csv(output_csv_filename, index=False, encoding='utf-8')
-
-def process_ms_method(df, input_csv_filename, output_csv_filename, separators, trigger_rows):
+# Steps 2 and 3: Define the 'process_method' function and extract Header Columns
+def process_method(df, input_csv_filename, output_csv_filename, separators, trigger_rows):
+    # Step 4: Initialize Separator Index
     header = [field for field in df.columns if field != "Policy content"] + ["Section"]
     all_sections = []
-
-    # Initial separator index
     separator_idx = 0
 
     for index, row in df.iterrows():
-        if "Policy content" in row:
+        if "Policy content" in row: #Change "Policy content" to the column that contains the relevant documents in your file.
             document = row["Policy content"]
-            
-            # Check if current row's "document number" is in the list of trigger rows
+
+            # Step 5: Check if current row's "document number" is in the list of trigger rows. Change "document number" to the relevant name in your csv file.
+
             if row["document number"].lower() in [tr.lower() for tr in trigger_rows]:
                 # If there's a next separator, shift to it
                 if separator_idx < len(separators) - 1:
                     separator_idx += 1
 
-            # Split the document based on the current separator
+            # Step 6: Split the Document
             if separator_idx == 0:  # Use simple string split for the first separator for backward compatibility
                 sections = document.split(separators[separator_idx])
             else:
                 sections = re.split(separators[separator_idx], document)
-            
+
+            # Step 7: Append Sections
             for section in sections:
                 if section.strip():
                     row_data = [row[field] for field in df.columns if field != "Policy content"] + [section.strip()]
                     all_sections.append(row_data)
 
+    # Step 8: Create a New DataFrame
     sections_df = pd.DataFrame(all_sections, columns=header)
     sections_df.to_csv(output_csv_filename, index=False, encoding='utf-8')
+    return sections_df
+
+
 
 def main():
-    # Ask user for input and output filenames
+    # Step 9: Configure Separators and Trigger Rows
+    separators = ["\\.", r'-----|={5,}']  # List of separators in order of appearance
+    trigger_rows = ["ota85"]  # List of rows (based on "document number") where the separator changes to the next one
+    # Step 10: Provide input data
     input_csv_filename = input("Enter the input CSV filename: ")
     output_csv_filename = input("Enter the desired output CSV filename: ")
 
-    # Define your list of separators and trigger rows
-    separators = ["\\.", r'-----|={5,}']  # List of separators
-    trigger_rows = ["ota85"]  # List of rows (based on "document number") where the separator changes to the next one
-
-    # Read the input CSV into a DataFrame
+    # Step 11: Run the code
     df = pd.read_csv(input_csv_filename)
-
-    print("Choose a method:")
-    print("1. Single Separator Method")
-    print("2. Multiple Separators Method")
-    choice = input("Enter your choice (1/2): ")
-
-    if choice == "1":
-        process_ss_method(df, input_csv_filename, output_csv_filename)
-    elif choice == "2":
-        process_ms_method(df, input_csv_filename, output_csv_filename, separators, trigger_rows)
-    else:
-        print("Invalid choice!")
+    out_df = process_method(df, input_csv_filename, output_csv_filename, separators, trigger_rows)
 
 if __name__ == "__main__":
     main()
