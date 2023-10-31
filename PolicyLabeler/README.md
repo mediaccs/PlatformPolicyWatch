@@ -1,5 +1,4 @@
-
-# Policy Labeler
+# PolicyLabeler
 
 This Python script is designed to identify values (or other desired content) in a specified column from an xlsx file. 
 
