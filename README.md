@@ -1,4 +1,4 @@
-# platformpolicywatch
+# Platform Policy Watch
 Platform Policy Watch
 
 ## To cite this tool:
