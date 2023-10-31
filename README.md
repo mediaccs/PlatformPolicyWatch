@@ -22,7 +22,7 @@ Our tool comprises three components:
 With this tool, researchers can explore the evolution of platform policies and the methodological challenges involved in longitudinal research.
 
 #### Figure 1 Overview of Platform Policy Watch 
-<img width="754" height="532" alt="framework" src="https://github.com/mediaccs/PlatformPolicyWatch/assets/11847478/885044e1-d7e1-4bb7-850f-4d869c97e79c">
+<img width="377" alt="framework" src="https://github.com/mediaccs/PlatformPolicyWatch/assets/11847478/e6224907-ff71-4b24-9c21-136862419c68">
 
 ## Component 1 - PolicyTimeMachine: Scraping and Tracking of Platform Policies
 
