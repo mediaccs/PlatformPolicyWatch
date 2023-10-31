@@ -7,6 +7,8 @@ Chan, N. K., Su, C. C., & Shore, A. (2023). Shifting platform values in communit
 
 Platform policies, such as Terms of Service (ToS), community guidelines, and privacy policies, are instrumental in setting standardized rules for digital platforms. Scholars emphasize the importance of studying platform governance frameworks, which offer idealized accounts of platform identity and governance principles. However, longitudinal studies of platform policies are rare in communication research due to challenges like corporate secrecy and the lack of historical records. To address this gap, we present the Platform Policy Watch tool. This tool aims to systematically collect, analyze, and document platform policies, providing a methodological framework for studying platform histories.
 
+*Please acknowledge this repository by citing it if you decide to use our tool.*
+
 ## Overview of the Tool
 
 Our tool comprises three components:
