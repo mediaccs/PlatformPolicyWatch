@@ -32,8 +32,9 @@ def process_method(df, input_csv_filename, output_csv_filename, separators, trig
                     row_data = [row[field] for field in df.columns if field != "Policy content"] + [section.strip()]
                     all_sections.append(row_data)
 
-    # Step 8: Create a New DataFrame
+    # Step 8: Create a New DataFrame and add column that adds a unique index for each section
     sections_df = pd.DataFrame(all_sections, columns=header)
+    sections_df.insert(1, "Section Index", sections_df["document number"] + "_" + sections_df.groupby("document number").cumcount().add(1).astype(str)) 
     sections_df.to_csv(output_csv_filename, index=False, encoding='utf-8')
     return sections_df
 
