@@ -26,7 +26,7 @@ This Python script is designed to process a CSV file containing policy documents
 - Python 3.x
 - pandas library (Install using `pip install pandas`)
 
-## Features
+### Features
 
 - Extract sections from policy documents.
 - Switch separators based on specific trigger rows.
@@ -43,9 +43,10 @@ This Python script is designed to process a CSV file containing policy documents
 pip install pandas
 ```
 
-## Walkthrough
- ### Step 1: Import Libraries
- Importing necessary Python libraries, including pandas for data handling and re for regular expressions.
+
+### Walkthrough
+ #### Step 1: Import Libraries
+ - Importing necessary Python libraries, including pandas for data handling and re for regular expressions.
 
 
 ```python
@@ -53,7 +54,7 @@ import pandas as pd
 import re
 ```
 
-### Steps 2 through 8
+#### Steps 2 through 8
 See comments throughout code for information on how to modify the code according to your input document.
 
 
@@ -88,10 +89,13 @@ def process_method(df, input_csv_filename, output_csv_filename, separators, trig
                     row_data = [row[field] for field in df.columns if field != "Policy content"] + [section.strip()]
                     all_sections.append(row_data)
 
-    # Step 8: Create a New DataFrame
+    # Step 8: Create a New DataFrame and add column that adds a unique index for each section
     sections_df = pd.DataFrame(all_sections, columns=header)
+    sections_df.insert(1, "Section Index", sections_df["document number"] + "_" + sections_df.groupby("document number").cumcount().add(1).astype(str))
     sections_df.to_csv(output_csv_filename, index=False, encoding='utf-8')
     return sections_df
+
+
 ```
 
 #### Step 9: Configure Separators and Trigger Rows
@@ -104,7 +108,7 @@ separators = ["\\.", r'-----|={5,}']  # List of separators
 trigger_rows = ["ota85"]  # List of rows (based on "document number") where the separator changes to the next one
 ```
 
-### Step 10: provide input data
+#### Step 10: provide input data
 You will be prompted to provide the following information:
 1. **Input CSV Filename:** Enter the filename of the CSV file you want to process. For example: 'youtube_without_duplicates.csv'
 2. **Output CSV Filename:** Enter the desired output filename where the extracted sections will be saved. For example: 'youtube_sectioned.csv'
@@ -121,7 +125,7 @@ output_csv_filename = input("Enter the desired output CSV filename: ")
 
 ```
 
-### Step 11: Run the code
+#### Step 11: Run the code
 
 
 ```python
@@ -129,19 +133,19 @@ df = pd.read_csv(input_csv_filename)
 out_df = process_method(df, input_csv_filename, output_csv_filename, separators, trigger_rows)
 ```
 
-### Output for two separators:
+#### Output for two separators:
 
 
 ```python
 print(out_df.head())
 ```
 
-      document number    OTA date                 OTA time Platform  \
-    0            ota1  2013-06-19  2013-06-19--19-19-52.md  YouTube   
-    1            ota1  2013-06-19  2013-06-19--19-19-52.md  YouTube   
-    2            ota1  2013-06-19  2013-06-19--19-19-52.md  YouTube   
-    3            ota1  2013-06-19  2013-06-19--19-19-52.md  YouTube   
-    4            ota1  2013-06-19  2013-06-19--19-19-52.md  YouTube   
+      document number Section Index    OTA date                 OTA time Platform  \
+    0            ota1        ota1_1  2013-06-19  2013-06-19--19-19-52.md  YouTube   
+    1            ota1        ota1_2  2013-06-19  2013-06-19--19-19-52.md  YouTube   
+    2            ota1        ota1_3  2013-06-19  2013-06-19--19-19-52.md  YouTube   
+    3            ota1        ota1_4  2013-06-19  2013-06-19--19-19-52.md  YouTube   
+    4            ota1        ota1_5  2013-06-19  2013-06-19--19-19-52.md  YouTube   
     
        Type of document  Last updated  \
     0  terms_of_service  June 9, 2010   
@@ -158,7 +162,7 @@ print(out_df.head())
     4  General Use of the Service—Permissions and Res...  
 
 
-### Version with a single separator:
+#### Version with a single separator:
 Notice how the list of rows is empty since the separator stays the same throughout the document.
 
 
@@ -172,12 +176,12 @@ out_df = process_method(df, input_csv_filename, output_csv_filename, separators,
 print(out_df.head())
 ```
 
-      document number    OTA date                 OTA time Platform  \
-    0            ota1  2021-10-07  2021-10-07--17-30-24.md     Lyft   
-    1            ota1  2021-10-07  2021-10-07--17-30-24.md     Lyft   
-    2            ota1  2021-10-07  2021-10-07--17-30-24.md     Lyft   
-    3            ota1  2021-10-07  2021-10-07--17-30-24.md     Lyft   
-    4            ota1  2021-10-07  2021-10-07--17-30-24.md     Lyft   
+      document number Section Index    OTA date                 OTA time Platform  \
+    0            ota1        ota1_1  2021-10-07  2021-10-07--17-30-24.md     Lyft   
+    1            ota1        ota1_2  2021-10-07  2021-10-07--17-30-24.md     Lyft   
+    2            ota1        ota1_3  2021-10-07  2021-10-07--17-30-24.md     Lyft   
+    3            ota1        ota1_4  2021-10-07  2021-10-07--17-30-24.md     Lyft   
+    4            ota1        ota1_5  2021-10-07  2021-10-07--17-30-24.md     Lyft   
     
        Type of document Effective   Last updated  \
     0  terms_of_service      none  April 1, 2021   
