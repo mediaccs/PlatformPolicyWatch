@@ -7,7 +7,7 @@ Platform policies, such as Terms of Service (ToS), community guidelines, and pri
 
 *Please acknowledge this repository by citing it if you decide to use our tool.*
 ## To cite this tool:
-Chan, N. K., Su, C. C., & Shore, A. (2023). Shifting platform values in community guidelines: Examining the evolution of TikTok’s governance frameworks. New Media & Society. Advanced online publication. https://doi.org/10.1177/14614448231189476
+Chan, N. K., Su, C. C., & Shore, A. (2023). Shifting platform values in community guidelines: Examining the evolution of TikTok’s governance frameworks. *New Media & Society*. Advanced online publication. https://doi.org/10.1177/14614448231189476
 
 ## Overview of the Tool
 
