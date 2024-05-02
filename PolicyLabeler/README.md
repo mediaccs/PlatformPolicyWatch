@@ -49,49 +49,28 @@ pip3 install re
 ### Step 2: Provide API key
 - Retrive your API key from OpenAI. Note that making API calls might incure costs on your end.
 
-
 ```python
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY","Enter Your Own API Key")) 
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY","Enter Your Own API Key"))
 
 ```
 
 ### Step 3: Write a prompt
-- Write your prompt. In this case, we are asking the model to identify whether one of these three values (privacy, safety, and choice) is present in the section given to it. For each value, it is asked to respond with either 1 if the value is present or 0 if it is not present.
+- Write your prompt. In this case, we are asking the model to identify whether any of these values (privacy, safety, and choice) are present in the section given to it. For each value, it is asked to respond with either 1 if the value is present or 0 if it is not present.
 
 
 ```python
-prompt_Q3 = prompt_Q3 = '''Here's a section from a social media platform policy. Please label if it contains the following information.
-            Return <1> if the information is present and <0> if the information is not present.
-            Please identify the presence or not of all the asked information in the order they were asked.
-            - Privacy: Privacy entails the degree to which users are empowered to manage their personal information, encompassing permissions for data control, sharing, and customization. It reflects the platform's approach in enabling or constraining user actions that influence the handling of their data, encapsulating transparency, consent, security, and user agency.
-            - Safety: Safety is defined as the freedom from danger or risk.
-            - Choice: Widely invoked in platform policies, choice signifies that individuals should be free to pick options that align with their interests. Through interface design, account personalization, and informational resources, platforms provide options and frame the ideal user as someone who makes active and informed choices that align with their preferences.
-            Answer using the JSON format, [<0>,<0>,<0>]. Do not provide any other information'''
-prompt_Q3
-```
-
-
-
-
-    
-
-
-
-
-```python
-!pip3 install openpyxl
+questions = []
 ```
 
    
 
 ### Step 4: Provide your input file
-- Provide an input file (xlsx format) and extract the first 10 rows as a sample.
+- Provide an input file (csv format).
 
 
 ```python
-Q3_initial_sample = pd.read_excel("input.xlsx") #replace with the name of your input file
-Q3_initial_sample = Q3_initial_sample.head(10)
-Q3_initial_sample
+input_csv_path = "Your CSV File Name"
+de = pd.read_csv(input_csv_path)
 ```
 
 
