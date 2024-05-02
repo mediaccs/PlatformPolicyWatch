@@ -51,7 +51,7 @@ pip3 install re
 
 
 ```python
-openai.api_key = "xxx" #replace with your API key
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY","Enter Your Own API Key")) 
 
 ```
 
