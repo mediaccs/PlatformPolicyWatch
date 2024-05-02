@@ -13,7 +13,6 @@ This Python script is designed to identify values (or other desired content) in 
   - [Step 3: Write a prompt](#step-3-write-a-prompt)
   - [Step 4: Provide your input file](#step-4-provide-your-input-file)
   - [Step 5: Run the model on the sample](#step-5-run-the-model-on-the-sample)
-  - [Step 6: Review and fine-tuning](#step-6-review-and-fine-tuning)
 
 
 ## Features
@@ -50,6 +49,8 @@ pip3 install re
 - Retrive your API key from OpenAI. Note that making API calls might incure costs on your end.
 
 ```python
+EMBEDDING_MODEL = "Enter your Embedding Model"
+GPT_MODEL = "Enter Your ChatGPT Model"
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY","Enter Your Own API Key"))
 
 ```
@@ -83,227 +84,36 @@ de = pd.read_csv(input_csv_path)
 
 
 ```python
-# Q3 initial sample 
+# Ask ChatGPT to code
+def ask_chatgpt(section_text, question):
+    response = client.chat.completions.create(
+     messages=[
+        {"role": "system", "content": "You will answer questions about the policy."},
+        {"role": "user", "content": f"{question}: {section_text}"}
+     ],
+     model=GPT_MODEL,
+     temperature=0,
+)
 
-if __name__ == "__main__":
-    # Setup parameters
-    column_name = "Section"  # the column name for the text to be classified
-    model_name = "gpt-4"  # the GPT model to use
-    label_num = 3  # the number of dimensions of this variable
-    valid_values = ['0', '1']  # the valid answers from this question
-    temperature = 0.7  # temperature 
-    q_name = "Q3"  # the name of this question/variable
-    once_verify_num = 3  # the numbers of results generated from GPT 
-    max_verify_retry = 5  # the number of retries if the previous is not converged
-    prompt = prompt_Q3
+    return (response.choices[0].message.content)
 
-    # Initialize GPT Classifier
-gpt_classifier = GPTClassifier()
-
-    # Setup classification task
-classification_task = ClassificationTask(
-        column=column_name,
-        prompt=prompt,
-        model_name=model_name,
-        label_num=label_num,
-        valid_values=valid_values,
-        temperature=temperature,
-        q_name=q_name,
-        once_verify_num=once_verify_num,
-        max_verify_retry=max_verify_retry
-    )
-
-    # Classify and save the result
-result_df_q3_first_try = gpt_classifier.classify_df(Q3_initial_sample, classification_task)
-result_df_q3_first_try.to_excel("classification_output.xlsx") #change name to desired output file
-```
-
-   
+# Process each row in the DataFrame
+for index, row in df.iterrows():
+    section_text = row['Section']
+    for i, question in enumerate(questions, start=1):
+        # Extract the first sentence of the question
+        first_sentence = re.split(r'\.|\n', question)[0].strip()
+        # Provide ChatGPT with the content from the CodeBook document
+        response = ask_chatgpt(section_text, question)
+        answer = response.split('\n')[-1]  # Extracting only the last response (answer to the question)
+        df.loc[index, first_sentence] = answer  # Add the answer to the DataFrame
 
 
-
-```python
-result_df_q3_first_try
+# Save the results to a new CSV file
+output_csv_path = 'Enter Your Output Filename'
+df.to_csv(output_csv_path, index=False)
 ```
 
 
+- Sample output
 
-
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Unnamed: 0</th>
-      <th>document number</th>
-      <th>OTA date</th>
-      <th>OTA time</th>
-      <th>Platform</th>
-      <th>Type of document</th>
-      <th>Effective</th>
-      <th>Last updated</th>
-      <th>Section</th>
-      <th>Q3_1_classification</th>
-      <th>Q3_2_classification</th>
-      <th>Q3_3_classification</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>ota1</td>
-      <td>2021-10-07</td>
-      <td>2021-10-07--17-30-24.md</td>
-      <td>Lyft</td>
-      <td>terms_of_service</td>
-      <td>none</td>
-      <td>2021-04-01</td>
-      <td>Last Updated: April 1, 2021_x000D_\nThese Term...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>ota1</td>
-      <td>2021-10-07</td>
-      <td>2021-10-07--17-30-24.md</td>
-      <td>Lyft</td>
-      <td>terms_of_service</td>
-      <td>none</td>
-      <td>2021-04-01</td>
-      <td>-_x000D_\nThe Lyft Platform provides a marketp...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>ota1</td>
-      <td>2021-10-07</td>
-      <td>2021-10-07--17-30-24.md</td>
-      <td>Lyft</td>
-      <td>terms_of_service</td>
-      <td>none</td>
-      <td>2021-04-01</td>
-      <td>-_x000D_\nLyft reserves the right to modify th...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3</td>
-      <td>ota1</td>
-      <td>2021-10-07</td>
-      <td>2021-10-07--17-30-24.md</td>
-      <td>Lyft</td>
-      <td>terms_of_service</td>
-      <td>none</td>
-      <td>2021-04-01</td>
-      <td>---_x000D_\nThe Lyft Platform may only be used...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4</td>
-      <td>ota1</td>
-      <td>2021-10-07</td>
-      <td>2021-10-07--17-30-24.md</td>
-      <td>Lyft</td>
-      <td>terms_of_service</td>
-      <td>none</td>
-      <td>2021-04-01</td>
-      <td>---_x000D_\nAs a Rider, you understand that re...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>5</td>
-      <td>ota1</td>
-      <td>2021-10-07</td>
-      <td>2021-10-07--17-30-24.md</td>
-      <td>Lyft</td>
-      <td>terms_of_service</td>
-      <td>none</td>
-      <td>2021-04-01</td>
-      <td>_x000D_\nIf you are a Driver, you will receive...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>6</td>
-      <td>ota1</td>
-      <td>2021-10-07</td>
-      <td>2021-10-07--17-30-24.md</td>
-      <td>Lyft</td>
-      <td>terms_of_service</td>
-      <td>none</td>
-      <td>2021-04-01</td>
-      <td>---_x000D_\nBy entering into this Agreement or...</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>7</td>
-      <td>ota1</td>
-      <td>2021-10-07</td>
-      <td>2021-10-07--17-30-24.md</td>
-      <td>Lyft</td>
-      <td>terms_of_service</td>
-      <td>none</td>
-      <td>2021-04-01</td>
-      <td>_x000D_\nYour Information is any information y...</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>8</td>
-      <td>ota1</td>
-      <td>2021-10-07</td>
-      <td>2021-10-07--17-30-24.md</td>
-      <td>Lyft</td>
-      <td>terms_of_service</td>
-      <td>none</td>
-      <td>2021-04-01</td>
-      <td>---_x000D_\nLyft, at its sole discretion, may ...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>9</td>
-      <td>ota1</td>
-      <td>2021-10-07</td>
-      <td>2021-10-07--17-30-24.md</td>
-      <td>Lyft</td>
-      <td>terms_of_service</td>
-      <td>none</td>
-      <td>2021-04-01</td>
-      <td>-_x000D_\nWith respect to your use of the Lyft...</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-### Step 6: Review and fine-tuning
-- Review and fine tune your model. For more information see https://github.com/mediaccs/LabelGenius .
