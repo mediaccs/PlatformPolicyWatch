@@ -73,12 +73,13 @@ input_csv_path = "Your CSV File Name"
 de = pd.read_csv(input_csv_path)
 ```
 
+- sample file
 ![image](https://github.com/mediaccs/PlatformPolicyWatch/assets/131724876/a2044f15-b9f1-44b5-a5ea-34057b47c9ff)
 
 
 
 ### Step 5: Run the model on the sample
-- Run  the model on the sample and save the result in an xlsx file for you to review.
+- Run  the model on the sample and save the result in an csv file for you to review.
 
 
 ```python
