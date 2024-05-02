@@ -1,8 +1,6 @@
 # Policy Labeler
 
-This Python script is designed to identify values (or other desired content) in a specified column from an xlsx file. 
-
-This policy labeler is adapted from the 'GPT-Powered Media Text Labeler' by Jiacheng Huang and Chris Chao Su. See: https://github.com/mediaccs/LabelGenius.
+This Python script is designed to identify values (or other desired content) in a specified column from a csv file. 
 
 # Table of Contents
 
@@ -26,25 +24,25 @@ This policy labeler is adapted from the 'GPT-Powered Media Text Labeler' by Jiac
 ## Prerequisites
 - Python 3.x
 - libraries (install using 'pip install *library*):
-    - sqlitedict, pandas, openai, loguru
+    - pandas, openai, ast, re, os, scripy
 - OpenAI api key
 
 ## Installation
-Install libraries and download github repository from https://github.com/mediaccs/LabelGenius.
+Install libraries
 
 ## Walkthrough
 
 ### Step 1: Import necessary libraries and function
-- Importing necessary Python libraries including pandas for data handling and load the gpt_classify function.
+- Importing necessary Python libraries including pandas for data handling.
 
 
 ```python
-from gpt_classify_function import *
-import pandas as pd
-!pip3 install sqlitedict
-!pip3 install --upgrade openai
-!pip3 install pandas
-!pip3 install loguru
+pip3 install ast
+pip3 install openai
+pip3 install pandas
+pip3 install os
+pip3 install scripy
+pip3 install re
 
 ```
 
