@@ -23,7 +23,14 @@ This Python script is designed to identify values (or other desired content) in 
 ## Prerequisites
 - Python 3.x
 - libraries (install using 'pip install *library*):
-    - pandas, openai, ast, re, os, scripy
+'''python
+pip3 install ast
+pip3 install openai
+pip3 install pandas
+pip3 install os
+pip3 install scripy
+pip3 install re
+'''
 - OpenAI api key
 
 ## Installation
@@ -36,12 +43,14 @@ Install libraries
 
 
 ```python
-pip3 install ast
-pip3 install openai
-pip3 install pandas
-pip3 install os
-pip3 install scripy
-pip3 install re
+import ast  # for converting embeddings saved as strings back to arrays
+from openai import OpenAI # for calling the OpenAI API
+import pandas as pd  # for storing text and embeddings data
+import os # for getting API token from env variable OPENAI_API_KEY
+from scipy import spatial  # for calculating vector similarities for search
+import re  # for using regular expressions
+
+
 
 ```
 
