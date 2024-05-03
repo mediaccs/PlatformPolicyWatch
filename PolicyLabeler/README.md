@@ -23,6 +23,7 @@ This Python script is designed to identify values (or other desired content) in 
 ## Prerequisites
 - Python 3.x
 - libraries (install using 'pip install *library*):
+
 '''python
 pip3 install ast
 pip3 install openai
@@ -30,7 +31,9 @@ pip3 install pandas
 pip3 install os
 pip3 install scripy
 pip3 install re
+
 '''
+
 - OpenAI api key
 
 ## Installation
