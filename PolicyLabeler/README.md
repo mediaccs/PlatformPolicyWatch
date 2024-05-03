@@ -79,7 +79,7 @@ questions = ['''Question 1.
 
 ```python
 input_csv_path = "Your CSV File Name"
-de = pd.read_csv(input_csv_path)
+df = pd.read_csv(input_csv_path)
 ```
 
 
