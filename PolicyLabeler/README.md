@@ -82,10 +82,6 @@ input_csv_path = "Your CSV File Name"
 de = pd.read_csv(input_csv_path)
 ```
 
-- sample file
-![image](https://github.com/mediaccs/PlatformPolicyWatch/assets/131724876/a2044f15-b9f1-44b5-a5ea-34057b47c9ff)
-
-
 
 ### Step 5: Run the model on the sample
 - Run  the model on the sample and save the result in an csv file for you to review.
@@ -121,7 +117,4 @@ for index, row in df.iterrows():
 output_csv_path = 'Enter Your Output Filename'
 df.to_csv(output_csv_path, index=False)
 ```
-
-
-- Sample output
 
