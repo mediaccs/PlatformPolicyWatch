@@ -67,7 +67,7 @@ questions = ['''Question 1.
             - Privacy: Privacy entails the degree to which users are empowered to manage their personal information, encompassing permissions for data control, sharing, and customization. It reflects the platform's approach in enabling or constraining user actions that influence the handling of their data, encapsulating transparency, consent, security, and user agency. 
             - Safety: Safety is defined as the freedom from danger or risk (Scharlach et al., 2023). It also includes advice on how to stay safe and descriptions of potential safety risks.
             - Choice: “Widely invoked in platform policies, choice signifies that individuals should be free to pick options that align with their interests. Through interface design, account personalization, and informational resources, platforms provide options and frame the ideal user as someone who makes active and informed choices that align with their preferences.” (Scharlach et al., 2023, p. 12). 
-            Answer using the JSON format, [<0>,<0>,<0>]. Do not provide any other information'''
+            Answer using this format, [0,0,0]. Do not provide any other information'''
 ]
 ```
 
