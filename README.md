@@ -11,7 +11,9 @@ Platform policies, such as Terms of Service (ToS), community guidelines, and pri
 Chris Chao Su; Ngai Keung Chan; Wanjiang Jacob Zhang; Benita Dederichs; Yangshuo Teng; Scarlett Sun
 
 ## To cite this tool:
-Chan, N. K., Su, C. C., & Shore, A. (2023). Shifting platform values in community guidelines: Examining the evolution of TikTok’s governance frameworks. *New Media & Society*. Advanced online publication. https://doi.org/10.1177/14614448231189476
+Su, C. C., & Chan, N. K. (2025). Assembling platform governance as private ordering in the age of generative AI: platform interdependence in policy evolution. *Information, Communication & Society*, 1-25. https://doi.org/10.1080/1369118X.2025.2513672
+
+Chan, N. K., Su, C. C., & Shore, A. (2023). Shifting platform values in community guidelines: Examining the evolution of TikTok’s governance frameworks. *New Media & Society, 27*(2), 1127-1151. https://doi.org/10.1177/14614448231189476
 
 ## Overview of the Tool
 
